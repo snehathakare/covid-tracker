@@ -3,14 +3,17 @@ import './App.css';
 import { FormControl, MenuItem, Select  } from '@material-ui/core';
 import Infobox from './Infobox';
 import Map from './Map';
+import Table from './Table';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import { sortData } from './util';
 
 function App() {
 
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState([]);
   const [countryInfo, setCountryInfo] = useState([]);
+  const [tableData, setTableData] = useState([]);
 
 
   useEffect(() => {
@@ -20,7 +23,7 @@ function App() {
      .then(data => {
         setCountryInfo(data);
      })
-     
+
   }, []); 
 
 
@@ -33,6 +36,9 @@ function App() {
           name: country.country, //United States, United Kingdom
           value: country.countryInfo.iso2 //UK,USA,FR
           }));
+
+        const sortedData = sortData(data); //sort data by cases
+        setTableData(data);
         setCountries(countries);
       })
     }
@@ -96,6 +102,7 @@ function App() {
         <Card>
           <CardContent>
             <h2>Live cases by country</h2>
+            <Table countries={tableData} />
           </CardContent>
           {/* Graph */}
           {/* Tables */}
