@@ -100,11 +100,10 @@ function App() {
         <Card>
           <CardContent>
             <h2>Live cases by country</h2>
-            <h2>Worldwide new cases</h2>
             <Table countries={tableData} />
-            //<LineGraph />
+            <h2>Worldwide new cases</h2>
+            <LineGraph />
           </CardContent>
-          {/* Graph */}
         </Card>
       </div>    
        
