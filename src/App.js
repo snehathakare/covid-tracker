@@ -6,7 +6,7 @@ import LineGraph from './LineGraph';
 import Table from './Table';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { sortData } from './util';
+import { sortData, prettyPrintStat } from './util';
 import { FormControl, MenuItem, Select  } from '@material-ui/core';
 import "leaflet/dist/leaflet.css";
 
@@ -18,6 +18,9 @@ function App() {
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796});
   const [mapZoom, setMapZoom] = useState(3);
+  const [mapCountries, setMapCountries] = useState([]);
+  const [casesType, setCasesType] = useState("cases");
+
 
   useEffect(() => {
     
@@ -42,6 +45,7 @@ function App() {
 
         const sortedData = sortData(data) //sort data by cases
         setTableData(sortedData);
+        setMapCountries(data);
         setCountries(countries);
       })
     }
@@ -90,13 +94,25 @@ function App() {
           </div>   
 
           <div className="app_stats">
-            <Infobox title="Coronavirus cases" total={countryInfo.cases} cases={countryInfo.todayCases} />
-            <Infobox title="Recovered" total={countryInfo.recovered} cases={countryInfo.todayRecovered}/>
-            <Infobox title="Deaths"  total={countryInfo.deaths} cases={countryInfo.todayDeaths}/>
+            <Infobox 
+              onClick = {(e) => setCasesType("cases")}
+              title="Coronavirus cases" 
+              total={prettyPrintStat(countryInfo.cases)} 
+              cases={prettyPrintStat(countryInfo.todayCases)} />
+            <Infobox 
+              onClick = {(e) => setCasesType("recovered")}
+              title="Recovered" 
+              total={prettyPrintStat(countryInfo.recovered)} 
+              cases={prettyPrintStat(countryInfo.todayRecovered)}/>
+            <Infobox
+              onClick = {(e) => setCasesType("deaths")} 
+              title="Deaths"  
+              total={prettyPrintStat(countryInfo.deaths)} 
+              cases={prettyPrintStat(countryInfo.todayDeaths)}/>
 
           </div>
             
-          <Map center={mapCenter}
+          <Map countries={mapCountries} casesType={casesType} center={mapCenter}
           zoom={mapZoom}/>
             
       </div>
