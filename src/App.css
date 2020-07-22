@@ -56,6 +56,15 @@ body {
   margin-bottom: 20px;
 }
 
+.app_info {
+  padding: 20px;
+}
+
+.app__info__link {
+  display: flex;
+  align-items: center;
+  color: gray !important;
+}
 
 
 @media (max-width: 990px) {

@@ -7,7 +7,7 @@ import Table from './Table';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { sortData, prettyPrintStat } from './util';
-import { FormControl, MenuItem, Select  } from '@material-ui/core';
+import { FormControl, MenuItem, Select, Avatar, BottomNavigation, BottomNavigationAction, Link  } from '@material-ui/core';
 import "leaflet/dist/leaflet.css";
 
 function App() {
@@ -21,6 +21,9 @@ function App() {
   const [mapCountries, setMapCountries] = useState([]);
   const [casesType, setCasesType] = useState("cases");
 
+  useEffect(() => {
+   document.title = "COVID-19 TRACKER";
+  }, []);
 
   useEffect(() => {
     
@@ -76,62 +79,73 @@ function App() {
   //console.log("info", countryInfo)
 
   return (
-    <div className="app">
-      
-      <div className="app__left">
-          <div className="app__header">
-            <h1>COVID-19 TRACKER</h1>
-            <FormControl className="app__dropdown"> 
-              <Select variant="outlined" value={country} onChange={onCountryChange}>
-                <MenuItem value="worldwide">Worldwide</MenuItem>
-                {
-                  countries.map(country =>(
-                    <MenuItem value={country.value}>{country.name}</MenuItem>
-                  ))
-                }
-              </Select>
-            </FormControl>
-          </div>   
+    <div>
+      <div className="app">
+        <div className="app__left">
+            <div className="app__header">
+              <h1>COVID-19 TRACKER</h1>
+              <FormControl className="app__dropdown"> 
+                <Select variant="outlined" value={country} onChange={onCountryChange}>
+                  <MenuItem value="worldwide">Worldwide</MenuItem>
+                  {
+                    countries.map(country =>(
+                      <MenuItem value={country.value}>{country.name}</MenuItem>
+                    ))
+                  }
+                </Select>
+              </FormControl>
+            </div>   
 
-          <div className="app_stats">
-            <Infobox isRed
-              active={casesType === 'cases'}
-              onClick = {(e) => setCasesType("cases")}
-              title="Coronavirus cases" 
-              total={prettyPrintStat(countryInfo.cases)} 
-              cases={prettyPrintStat(countryInfo.todayCases)} />
-            <Infobox 
-              active={casesType === 'recovered'}
-              onClick = {(e) => setCasesType("recovered")}
-              title="Recovered" 
-              total={prettyPrintStat(countryInfo.recovered)} 
-              cases={prettyPrintStat(countryInfo.todayRecovered)}/>
-            <Infobox isRed
-              active={casesType === 'deaths'}
-              onClick = {(e) => setCasesType("deaths")} 
-              title="Deaths"  
-              total={prettyPrintStat(countryInfo.deaths)} 
-              cases={prettyPrintStat(countryInfo.todayDeaths)}/>
+            <div className="app_stats">
+              <Infobox isRed
+                active={casesType === 'cases'}
+                onClick = {(e) => setCasesType("cases")}
+                title="Coronavirus cases" 
+                total={prettyPrintStat(countryInfo.cases)} 
+                cases={prettyPrintStat(countryInfo.todayCases)} />
+              <Infobox 
+                active={casesType === 'recovered'}
+                onClick = {(e) => setCasesType("recovered")}
+                title="Recovered" 
+                total={prettyPrintStat(countryInfo.recovered)} 
+                cases={prettyPrintStat(countryInfo.todayRecovered)}/>
+              <Infobox isRed
+                active={casesType === 'deaths'}
+                onClick = {(e) => setCasesType("deaths")} 
+                title="Deaths"  
+                total={prettyPrintStat(countryInfo.deaths)} 
+                cases={prettyPrintStat(countryInfo.todayDeaths)}/>
 
-          </div>
-            
-          <Map countries={mapCountries} casesType={casesType} center={mapCenter}
-          zoom={mapZoom}/>
-            
-      </div>
-      
-      
-      <Card className="app__right">
-        <CardContent>
-          <h2>Live cases by country</h2>
-          <Table countries={tableData} />
-          <h3 className="app__graphTitle">Worldwide new cases</h3>
-          <LineGraph className="app__graph" casesType={casesType} />
-        </CardContent>
-      </Card>
-         
+            </div>
+              
+            <Map countries={mapCountries} casesType={casesType} center={mapCenter}
+            zoom={mapZoom}/>
+              
+        </div>
+        
+        
+        <Card className="app__right">
+          <CardContent>
+            <h2>Live cases by country</h2>
+            <Table countries={tableData} />
+            <h3 className="app__graphTitle">Worldwide new cases</h3>
+            <LineGraph className="app__graph" casesType={casesType} />
+          </CardContent>
+        </Card>
+          
+      </div> 
+      <div className="app_info">
+            <BottomNavigation>
+              <Link className="app__info__link" target="_blank" href="https://www.linkedin.com/in/sneha-thakare-46750a53/" >
+                Created by Sneha
+              </Link>
+          </BottomNavigation>
+          
+      </div>       
        
     </div>
+
+
   );
 }
 
