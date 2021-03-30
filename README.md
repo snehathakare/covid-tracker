@@ -4,7 +4,7 @@ This is a Covid-19 tracker application to view number of cases worldwide areawis
 
 ### Concepts implemented
 
-ReactJs suing Hooks<br />
+ReactJs using Hooks<br />
 Material UI<br />
 API (disease.sh)<br />
 React Leaflet<br />
